@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ben & Milly's Engagement</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Shrikhand&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f8f4f0;
+      --primary-color: #b54c2d;
+      --accent-color: #ddb892;
+      --text-color: #3d2c29;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-image: url('images/background.png'); /* Placeholder */
+      background-size: cover;
+      background-position: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.9);
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      backdrop-filter: blur(6px);
+      transition: all 0.4s ease;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      font-family: 'Shrikhand', cursive;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 0.7rem 1.2rem;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #8f3923;
+    }
+
+    .invite {
+      display: none;
+      margin-top: 2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .invite h2 {
+      color: var(--primary-color);
+      font-size: 1.4rem;
+    }
+
+    .hero-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 10px;
+      margin-top: 1rem;
+      width: 100%;
+      height: 250px;
+    }
+
+    .rsvp {
+      margin-top: 2rem;
+    }
+
+    .rsvp input, .rsvp textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .rsvp button {
+      width: 100%;
+      padding: 0.7rem;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .container { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="landing">
+      <h1>Enter Your Code</h1>
+      <input type="text" id="codeInput" placeholder="e.g. B123" />
+      <button onclick="checkCode()">Submit</button>
+    </div>
+
+    <div class="invite" id="invitePage">
+      <img src="your-photo-placeholder.jpg" alt="Ben and Milly" class="hero-img" />
+      <h2><span id="guestNames"></span>, you are invited to</h2>
+      <h1>Ben & Milly's Engagement Party</h1>
+      <p><strong>Date:</strong> 30th August</p>
+      <p><strong>Time:</strong> 11:00 AM</p>
+      <p><strong>Location:</strong> Frogmary Green Farm</p>
+
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2521.5215524972223!2d-2.8095082238133866!3d50.95795497168282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487248f501f254db%3A0x68b58c9579cf7a77!2sFrogmary%20Green%20Farm!5e0!3m2!1sen!2suk!4v1720345600000!5m2!1sen!2suk"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+
+      <div class="rsvp">
+        <h2>Kindly RSVP</h2>
+        <input type="text" placeholder="Your Name" />
+        <textarea rows="3" placeholder="Your Message or Dietary Requirements"></textarea>
+        <button onclick="alert('RSVP submitted!')">Send RSVP</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const guestCodes = {
+      "B123": "Ben & Sarah",
+      "M456": "Milly & James",
+      "T789": "Tom & Emily"
+    };
+
+    function checkCode() {
+      const input = document.getElementById("codeInput").value.trim();
+      if (guestCodes[input]) {
+        document.querySelector(".landing").style.display = "none";
+        const invite = document.getElementById("invitePage");
+        invite.style.display = "block";
+        invite.style.animation = "fadeIn 1s ease forwards";
+        document.getElementById("guestNames").textContent = guestCodes[input];
+      } else {
+        alert("Invalid code. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
