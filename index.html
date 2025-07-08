@@ -34,6 +34,7 @@
     }
 
     .container {
+      position: relative;
       text-align: center;
       padding: 2rem;
       border-radius: 12px;
@@ -84,7 +85,6 @@
     }
 
     .invite {
-      display: none;
       margin-top: 2rem;
       animation: fadeIn 1s ease forwards;
     }
@@ -136,6 +136,10 @@
       z-index: 9999;
     }
 
+    #map{
+        width:100%;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 1.5rem; }
       .container { padding: 1rem; }
@@ -146,20 +150,15 @@
 
   <canvas class="confetti" id="confetti"></canvas>
   <div class="container">
-    <div class="landing">
-      <h1>Enter Your Code</h1>
-      <input type="text" id="codeInput" placeholder="e.g. B123" />
-      <button onclick="checkCode()">Submit</button>
-    </div>
 
     <div class="invite" id="invitePage">
-      <img src="images/engagement.JPEG" alt="Ben and Milly" class="hero-img" />
-      <h2><span id="guestNames"></span>, you are invited to</h2>
+      <img src="images/engagement.png" alt="Ben and Milly" class="hero-img" />
+      <h2>You're invited to</h2>
       <h1>Ben & Milly's Engagement Party</h1>
       <p><strong>Date:</strong> 30th August</p>
       <p><strong>Time:</strong> 11:00 AM</p>
       <p><strong>Location:</strong> Frogmary Green Farm, West Street, South Petherton, Somerset, TA13 5DJ</p>
-
+      <img id="map" src="images/map.png">
       <div class="rsvp">
         <h2>Kindly RSVP</h2>
         <form action="https://formspree.io/f/xldnygdl" method="POST" onsubmit="handleRSVP(event)">
@@ -174,28 +173,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const guestCodes = {
-      "CMDR": "Camilla & David",
-      "JETO": "Jem & Tom",
-      "KAFI": "Kaan & Fiona",
-      "BALL": "Nana, Natasha, Ben, Zach and Enzo",
-      "SODA": "Sophia & Dan",
-      "Grandpa": "Grandpa"
-    };
-
-    function checkCode() {
-      const input = document.getElementById("codeInput").value.trim();
-      if (guestCodes[input]) {
-        document.querySelector(".landing").style.display = "none";
-        const invite = document.getElementById("invitePage");
-        invite.style.display = "block";
-        invite.style.animation = "fadeIn 1s ease forwards";
-        document.getElementById("guestNames").textContent = guestCodes[input];
-      } else {
-        alert("Invalid code. Please try again.");
-      }
-    }
-
     function handleRSVP(event) {
       event.preventDefault();
       const form = event.target;
