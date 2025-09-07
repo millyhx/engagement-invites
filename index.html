@@ -1,202 +1,135 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ben & Milly's Engagement</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Shrikhand&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Country Cars and Vans | Local Car & Van Garage</title>
+  <meta name="description" content="Country Cars and Vans – friendly local garage for servicing, MOTs, repairs and diagnostics." />
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
-      --bg-color: #fff3f8;
-      --primary-color: #cc4b7c;
-      --accent-color: #ffb6c1;
-      --text-color: #4d2e36;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Quicksand', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-image: url('a8881f1a-0f60-48e4-a3b0-b756dfcb67f3.png');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      position: relative;
-    }
-
-    .container {
-      position: relative;
-      text-align: center;
-      padding: 2rem;
-      border-radius: 12px;
-      background-color: rgba(255, 255, 255, 0.95);
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      backdrop-filter: blur(6px);
-      transition: all 0.4s ease;
-      animation: fadeIn 1s ease forwards;
-      z-index: 1;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 {
-      font-family: 'Shrikhand', cursive;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--primary-color);
-    }
-
-    input[type="text"], textarea {
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-
-    button {
-      padding: 0.7rem 1.2rem;
-      background-color: var(--primary-color);
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #a73863;
-    }
-
-    .invite {
-      margin-top: 2rem;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .invite h2 {
-      color: var(--primary-color);
-      font-size: 1.4rem;
-    }
-
-    .hero-img {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .rsvp {
-      margin-top: 2rem;
-    }
-
-    .rsvp input, .rsvp textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .rsvp button {
-      width: 100%;
-      padding: 0.7rem;
-    }
-
-    .confirmation {
-      display: none;
-      color: green;
-      font-weight: bold;
-      margin-top: 1rem;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    .confetti {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    #map{
-        width:100%;
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 1.5rem; }
-      .container { padding: 1rem; }
-    }
+    .map-frame { width: 100%; border: 0; height: 320px; }
+    @media (min-width: 768px) { .map-frame { height: 420px; } }
   </style>
 </head>
-<body>
+<body class="antialiased text-slate-800 bg-slate-50">
+  <div class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-slate-900/95 backdrop-blur sticky top-0 z-30 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex items-center justify-between py-3 gap-4">
+          <!-- Logo space -->
+          <div class="flex items-center gap-3">
+            <img src="images/logo.png" alt="Country Cars and Vans logo" class="h-10 w-auto" aria-hidden="true" />
+            <span class="sr-only">Country Cars and Vans</span>
+          </div>
 
-  <canvas class="confetti" id="confetti"></canvas>
-  <div class="container">
-
-    <div class="invite" id="invitePage">
-      <img src="images/engagement.png" alt="Ben and Milly" class="hero-img" />
-      <h2>You're invited to</h2>
-      <h1>Ben & Milly's Engagement Party</h1>
-      <p><strong>Date:</strong> 30th August</p>
-      <p><strong>Time:</strong> 1:30PM</p>
-      <p><strong>Location:</strong> The Cosy Club, 31 Corn St, Bristol BS1 1HT, United Kingdom</p>
-      <img id="map" src="images/map.jpeg">
-      <div class="rsvp">
-        <h2>Kindly RSVP</h2>
-        <form action="https://formspree.io/f/xldnygdl" method="POST" onsubmit="handleRSVP(event)">
-          <input type="text" name="name" placeholder="Your Name" required />
-          <textarea name="message" rows="3" placeholder="Your Message or Dietary Requirements"></textarea>
-          <button type="submit">Send RSVP</button>
-        </form>
-        <div class="confirmation" id="confirmationMessage">Thank you! Your RSVP has been received.</div>
+          <!-- Primary contact -->
+          <div class="flex items-center gap-2">
+            <a href="tel:01234567890" class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2 text-base font-semibold text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400" aria-label="Call us">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.63 2.59a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.49-1.09a2 2 0 0 1 2.11-.45c.83.3 1.7.51 2.59.63A2 2 0 0 1 22 16.92z"/></svg>
+              <span class="whitespace-nowrap">01234 567 890</span>
+            </a>
+            <a href="mailto:hello@countrycarsandvans.co.uk" class="hidden sm:inline-flex items-center justify-center rounded-xl bg-sky-600 px-3.5 py-2 text-base font-semibold text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-400" aria-label="Email us">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
+              <span>hello@countrycarsandvans.co.uk</span>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="flex-1">
+      <!-- Hero / intro with background image and call-to-action -->
+      <section class="relative bg-slate-900">
+        <div class="absolute inset-0">
+          <img src="images/hero.jpg" alt="Garage background" class="w-full h-full object-cover opacity-40">
+        </div>
+        <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="py-20 sm:py-28 text-center">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">Country Cars and Vans</h1>
+            <p class="mt-4 text-lg text-slate-100 max-w-2xl mx-auto">Your friendly local garage for servicing, MOTs, repairs and diagnostics on cars and vans. Honest advice, clear pricing, and quick turnarounds to keep you moving.</p>
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+              <a href="tel:01234567890" class="inline-block rounded-xl bg-sky-600 px-6 py-3 text-lg font-semibold text-white shadow hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-400">Call Us</a>
+              <a href="mailto:hello@countrycarsandvans.co.uk" class="inline-block rounded-xl bg-white/90 px-6 py-3 text-lg font-semibold text-slate-900 shadow hover:bg-white focus:outline-none focus:ring-2 focus:ring-sky-400">Email Us</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="py-14">
+            <div class="grid md:grid-cols-3 gap-8 items-start">
+              <div class="md:col-span-2">
+                <h2 class="text-2xl font-bold text-slate-900">About us</h2>
+                <p class="mt-3 leading-relaxed text-slate-700">We’re an independent, family-run garage serving the local community. Our qualified technicians work on all makes and models, using quality parts and the latest diagnostic tools. Whether you need routine servicing, tyres, brakes, a clutch, or a pre-MOT check, we’re here to help.</p>
+                <ul class="mt-4 list-disc list-inside text-slate-700 space-y-1">
+                  <li>Servicing & MOT preparation</li>
+                  <li>Repairs & diagnostics</li>
+                  <li>Tyres, brakes & exhausts</li>
+                  <li>Van specialists welcome</li>
+                </ul>
+              </div>
+              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
+                <h3 class="font-semibold text-slate-900">Opening hours</h3>
+                <dl class="mt-3 text-slate-700 grid grid-cols-2 gap-y-2">
+                  <dt>Mon–Fri</dt><dd>08:30–17:30</dd>
+                  <dt>Saturday</dt><dd>09:00–12:30</dd>
+                  <dt>Sunday</dt><dd>Closed</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Find us -->
+      <section class="bg-slate-100" id="find-us">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="py-14">
+            <h2 class="text-2xl font-bold text-slate-900 text-center">Find us</h2>
+            <div class="mt-8 grid md:grid-cols-2 gap-8 items-start">
+              <!-- Map -->
+              <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
+                <iframe title="Map to Country Cars and Vans" class="map-frame" loading="lazy" allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=Unit%204%2C%20Meadow%20Lane%2C%20Countrytown%2C%20CT1%202AB&output=embed">
+                </iframe>
+              </div>
+
+              <!-- Address -->
+              <div>
+                <address class="not-italic text-slate-700">
+                  <div class="text-lg font-semibold text-slate-900">Country Cars and Vans Ltd</div>
+                  <div>Station Yard, Station Rd, Taunton</div>
+                  <div>Wiveliscombe</div>
+                  <div>TA4 2LX</div>
+                </address>
+
+                <p class="mt-4 text-sm text-slate-500">Parking available on-site. Please call ahead for availability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-200 mt-6">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="text-sm">© <span id="year"></span> Country Cars and Vans. All rights reserved.</p>
+          <div class="text-sm">VAT Reg: 919938861 · Company No: 00000000</div>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    function handleRSVP(event) {
-      event.preventDefault();
-      const form = event.target;
-      const data = new FormData(form);
-      fetch(form.action, {
-        method: "POST",
-        body: data,
-        headers: {
-          'Accept': 'application/json'
-        }
-      }).then(response => {
-        if (response.ok) {
-          document.getElementById("confirmationMessage").style.display = "block";
-          form.reset();
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-        } else {
-          alert("Oops! There was a problem submitting your RSVP.");
-        }
-      });
-    }
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
