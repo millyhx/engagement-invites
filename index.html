@@ -1,135 +1,465 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Country Cars and Vans | Local Car & Van Garage</title>
-  <meta name="description" content="Country Cars and Vans – friendly local garage for servicing, MOTs, repairs and diagnostics." />
-  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <title>Millys Fitness Schedule</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .map-frame { width: 100%; border: 0; height: 320px; }
-    @media (min-width: 768px) { .map-frame { height: 420px; } }
+    /* Smooth hide/show for tabs */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    /* Make the draggable timer ignore text selection during drag */
+    .no-select{user-select:none;-webkit-user-select:none}
   </style>
 </head>
-<body class="antialiased text-slate-800 bg-slate-50">
-  <div class="min-h-screen flex flex-col">
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+  <!-- App Shell -->
+  <div class="max-w-md mx-auto min-h-screen pb-32">
     <!-- Header -->
-    <header class="bg-slate-900/95 backdrop-blur sticky top-0 z-30 border-b border-slate-800">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="flex items-center justify-between py-3 gap-4">
-          <!-- Logo space -->
-          <div class="flex items-center gap-3">
-            <img src="images/logo.png" alt="Country Cars and Vans logo" class="h-10 w-auto" aria-hidden="true" />
-            <span class="sr-only">Country Cars and Vans</span>
-          </div>
-
-          <!-- Primary contact -->
-          <div class="flex items-center gap-2">
-            <a href="tel:01234567890" class="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2 text-base font-semibold text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-400" aria-label="Call us">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72c.12.89.33 1.76.63 2.59a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.49-1.09a2 2 0 0 1 2.11-.45c.83.3 1.7.51 2.59.63A2 2 0 0 1 22 16.92z"/></svg>
-              <span class="whitespace-nowrap">01234 567 890</span>
-            </a>
-            <a href="mailto:hello@countrycarsandvans.co.uk" class="hidden sm:inline-flex items-center justify-center rounded-xl bg-sky-600 px-3.5 py-2 text-base font-semibold text-white hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-400" aria-label="Email us">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg>
-              <span>hello@countrycarsandvans.co.uk</span>
-            </a>
-          </div>
-        </div>
-      </div>
+    <header class="px-4 pt-6 pb-4">
+      <h1 class="text-2xl font-semibold tracking-tight">Weekly Fitness</h1>
+      <p class="text-sm text-neutral-400">Simple plan • Mobile-first • Low weight + light runs</p>
     </header>
 
-    <!-- Main content -->
-    <main class="flex-1">
-      <!-- Hero / intro with background image and call-to-action -->
-      <section class="relative bg-slate-900">
-        <div class="absolute inset-0">
-          <img src="images/hero.jpg" alt="Garage background" class="w-full h-full object-cover opacity-40">
+    <!-- Nutrition Summary -->
+    <section class="px-4">
+      <div class="grid grid-cols-3 gap-3">
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Calories</p>
+          <p class="text-2xl font-bold">1,400</p>
+          <p class="text-[10px] text-neutral-400">kcal / day</p>
         </div>
-        <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="py-20 sm:py-28 text-center">
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">Country Cars and Vans</h1>
-            <p class="mt-4 text-lg text-slate-100 max-w-2xl mx-auto">Your friendly local garage for servicing, MOTs, repairs and diagnostics on cars and vans. Honest advice, clear pricing, and quick turnarounds to keep you moving.</p>
-            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <a href="tel:01234567890" class="inline-block rounded-xl bg-sky-600 px-6 py-3 text-lg font-semibold text-white shadow hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-400">Call Us</a>
-              <a href="mailto:hello@countrycarsandvans.co.uk" class="inline-block rounded-xl bg-white/90 px-6 py-3 text-lg font-semibold text-slate-900 shadow hover:bg-white focus:outline-none focus:ring-2 focus:ring-sky-400">Email Us</a>
-            </div>
-          </div>
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Weight</p>
+          <p class="text-2xl font-bold">84<span class="text-base font-medium"> kg</span></p>
+          <p class="text-[10px] text-neutral-400">Current</p>
         </div>
-      </section>
-
-      <!-- About -->
-      <section class="bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="py-14">
-            <div class="grid md:grid-cols-3 gap-8 items-start">
-              <div class="md:col-span-2">
-                <h2 class="text-2xl font-bold text-slate-900">About us</h2>
-                <p class="mt-3 leading-relaxed text-slate-700">We’re an independent, family-run garage serving the local community. Our qualified technicians work on all makes and models, using quality parts and the latest diagnostic tools. Whether you need routine servicing, tyres, brakes, a clutch, or a pre-MOT check, we’re here to help.</p>
-                <ul class="mt-4 list-disc list-inside text-slate-700 space-y-1">
-                  <li>Servicing & MOT preparation</li>
-                  <li>Repairs & diagnostics</li>
-                  <li>Tyres, brakes & exhausts</li>
-                  <li>Van specialists welcome</li>
-                </ul>
-              </div>
-              <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm">
-                <h3 class="font-semibold text-slate-900">Opening hours</h3>
-                <dl class="mt-3 text-slate-700 grid grid-cols-2 gap-y-2">
-                  <dt>Mon–Fri</dt><dd>08:30–17:30</dd>
-                  <dt>Saturday</dt><dd>09:00–12:30</dd>
-                  <dt>Sunday</dt><dd>Closed</dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Find us -->
-      <section class="bg-slate-100" id="find-us">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-          <div class="py-14">
-            <h2 class="text-2xl font-bold text-slate-900 text-center">Find us</h2>
-            <div class="mt-8 grid md:grid-cols-2 gap-8 items-start">
-              <!-- Map -->
-              <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">
-                <iframe title="Map to Country Cars and Vans" class="map-frame" loading="lazy" allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps?q=Unit%204%2C%20Meadow%20Lane%2C%20Countrytown%2C%20CT1%202AB&output=embed">
-                </iframe>
-              </div>
-
-              <!-- Address -->
-              <div>
-                <address class="not-italic text-slate-700">
-                  <div class="text-lg font-semibold text-slate-900">Country Cars and Vans Ltd</div>
-                  <div>Station Yard, Station Rd, Taunton</div>
-                  <div>Wiveliscombe</div>
-                  <div>TA4 2LX</div>
-                </address>
-
-                <p class="mt-4 text-sm text-slate-500">Parking available on-site. Please call ahead for availability.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-200 mt-6">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p class="text-sm">© <span id="year"></span> Country Cars and Vans. All rights reserved.</p>
-          <div class="text-sm">VAT Reg: 919938861 · Company No: 00000000</div>
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Goal</p>
+          <p class="text-2xl font-bold">70<span class="text-base font-medium"> kg</span></p>
+          <p class="text-[10px] text-neutral-400">Target</p>
         </div>
       </div>
-    </footer>
+      <div class="mt-3 text-[11px] text-neutral-400">Tip: aim for protein each meal, hydrate well, and adjust portions to keep energy steady.</div>
+    </section>
+
+    <!-- Day Tabs -->
+    <section class="mt-6">
+      <div class="px-4 flex gap-2 overflow-x-auto no-scrollbar">
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black" data-day="mon">Mon</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="tue">Tue</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="wed">Wed</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="thu">Thu</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="fri">Fri</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="sat">Sat</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-day="sun">Sun</button>
+      </div>
+
+      <div class="mt-4 px-4 space-y-4">
+        <!-- Monday -->
+        <article id="panel-mon" class="tab-panel active">
+          <h2 class="text-lg font-semibold">Legs + Easy Run</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12</span>
+              <div>
+                <p class="text-sm font-medium">Bodyweight Squats</p>
+                <p class="text-xs text-neutral-400">Tempo 2–1–2. Rest 45–60s.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×10/leg</span>
+              <div>
+                <p class="text-sm font-medium">Reverse Lunges</p>
+                <p class="text-xs text-neutral-400">Light dumbbells optional.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×15</span>
+              <div>
+                <p class="text-sm font-medium">Glute Bridges</p>
+                <p class="text-xs text-neutral-400">Squeeze and pause 1s at top.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">2×20</span>
+              <div>
+                <p class="text-sm font-medium">Standing Calf Raises</p>
+                <p class="text-xs text-neutral-400">Slow lowers.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3">
+            <p class="text-sm font-medium">Run: 10 min easy</p>
+            <p class="text-xs text-neutral-400">Nasal breathing pace. Walk if needed.</p>
+          </div>
+        </article>
+
+        <!-- Tuesday -->
+        <article id="panel-tue" class="tab-panel">
+          <h2 class="text-lg font-semibold">Upper Body + Easy Cardio</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×10</span>
+              <div>
+                <p class="text-sm font-medium">Incline Push-Ups</p>
+                <p class="text-xs text-neutral-400">Bench/counter. Keep reps smooth.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12/side</span>
+              <div>
+                <p class="text-sm font-medium">1-Arm Dumbbell Rows</p>
+                <p class="text-xs text-neutral-400">Light weight; focus on squeeze.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×20</span>
+              <div>
+                <p class="text-sm font-medium">Shoulder Taps</p>
+                <p class="text-xs text-neutral-400">Slow, hips still.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">2×15</span>
+              <div>
+                <p class="text-sm font-medium">Biceps Curls (light)</p>
+                <p class="text-xs text-neutral-400">Full range, no swing.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3">
+            <p class="text-sm font-medium">Walk/Jog: 15 min</p>
+            <p class="text-xs text-neutral-400">Comfortable conversational pace.</p>
+          </div>
+        </article>
+
+        <!-- Wednesday (Rest) -->
+        <article id="panel-wed" class="tab-panel">
+          <h2 class="text-lg font-semibold">Rest + Mobility</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="rounded-xl bg-neutral-900 p-3 text-sm">Gentle full-body stretch • 10–15 min</li>
+            <li class="rounded-xl bg-neutral-900 p-3 text-sm">Easy walk • 20–30 min (optional)</li>
+            <li class="rounded-xl bg-neutral-900 p-3 text-xs text-neutral-400">Focus on sleep, water, and protein.</li>
+          </ul>
+        </article>
+
+        <!-- Thursday -->
+        <article id="panel-thu" class="tab-panel">
+          <h2 class="text-lg font-semibold">Core + Run Intervals</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×30s</span>
+              <div>
+                <p class="text-sm font-medium">Plank</p>
+                <p class="text-xs text-neutral-400">Ribs down, squeeze glutes.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×10/side</span>
+              <div>
+                <p class="text-sm font-medium">Dead Bug</p>
+                <p class="text-xs text-neutral-400">Slow and controlled.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×10/side</span>
+              <div>
+                <p class="text-sm font-medium">Bird Dog</p>
+                <p class="text-xs text-neutral-400">Reach long, keep hips level.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×20</span>
+              <div>
+                <p class="text-sm font-medium">Mountain Climbers</p>
+                <p class="text-xs text-neutral-400">Steady rhythm.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3">
+            <p class="text-sm font-medium">Run: 6 × 1 min easy / 1 min walk</p>
+            <p class="text-xs text-neutral-400">Warm up 5 min walk first.</p>
+          </div>
+        </article>
+
+        <!-- Friday -->
+        <article id="panel-fri" class="tab-panel">
+          <h2 class="text-lg font-semibold">Full Body (Light)</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12</span>
+              <div>
+                <p class="text-sm font-medium">Goblet Squat (light)</p>
+                <p class="text-xs text-neutral-400">Comfortable weight; perfect form.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12</span>
+              <div>
+                <p class="text-sm font-medium">Dumbbell Shoulder Press</p>
+                <p class="text-xs text-neutral-400">Stop before pain; smooth reps.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×15</span>
+              <div>
+                <p class="text-sm font-medium">Band Pull-Aparts / Rows</p>
+                <p class="text-xs text-neutral-400">Pinch shoulder blades.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12</span>
+              <div>
+                <p class="text-sm font-medium">Hip Hinge (RDL pattern)</p>
+                <p class="text-xs text-neutral-400">Light DBs, neutral back.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3">
+            <p class="text-sm font-medium">Jog: 10 min easy</p>
+            <p class="text-xs text-neutral-400">Cool down 5 min walk.</p>
+          </div>
+        </article>
+
+        <!-- Saturday -->
+        <article id="panel-sat" class="tab-panel">
+          <h2 class="text-lg font-semibold">Glutes/Legs + Steady Run</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12/leg</span>
+              <div>
+                <p class="text-sm font-medium">Step-Ups (knee-high bench)</p>
+                <p class="text-xs text-neutral-400">Drive through heel; slow down.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×12</span>
+              <div>
+                <p class="text-sm font-medium">RDL (light)</p>
+                <p class="text-xs text-neutral-400">Hips back, slight knee bend.</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 rounded-xl bg-neutral-900 p-3">
+              <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">3×10/leg</span>
+              <div>
+                <p class="text-sm font-medium">Side Lunges</p>
+                <p class="text-xs text-neutral-400">Stay tall; toe forward.</p>
+              </div>
+            </li>
+          </ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3">
+            <p class="text-sm font-medium">Run: 20 min easy steady</p>
+            <p class="text-xs text-neutral-400">Keep it conversational.</p>
+          </div>
+        </article>
+
+        <!-- Sunday (Rest) -->
+        <article id="panel-sun" class="tab-panel">
+          <h2 class="text-lg font-semibold">Full Rest</h2>
+          <ul class="mt-2 space-y-2">
+            <li class="rounded-xl bg-neutral-900 p-3 text-sm">Feet up, relax, light walk optional.</li>
+            <li class="rounded-xl bg-neutral-900 p-3 text-xs text-neutral-400">Plan next week. Prep meals & water.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- Floating Draggable Countdown Timer -->
+  <div id="timer" class="fixed bottom-6 right-6 z-50">
+    <!-- Collapsed bubble -->
+    <button id="timerBubble" class="no-select w-16 h-16 rounded-full bg-lime-500 text-black shadow-xl flex items-center justify-center text-lg font-semibold active:scale-95 transition" aria-label="Open timer" title="Timer">
+      <span id="bubbleTime">00:30</span>
+    </button>
+
+    <!-- Expanded card -->
+    <div id="timerCard" class="hidden mt-2 w-72 max-w-[90vw] rounded-2xl bg-neutral-900/95 backdrop-blur p-4 shadow-2xl border border-neutral-800">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold">Set Timer</h3>
+        <button id="closeCard" class="text-xs text-neutral-400 hover:text-neutral-200">Close</button>
+      </div>
+      <div class="mt-3 grid grid-cols-3 gap-2">
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="30">30s</button>
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="60">60s</button>
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="90">90s</button>
+      </div>
+      <div class="mt-3 flex items-center gap-2">
+        <input id="minInput" type="number" min="0" value="0" class="w-1/2 rounded-xl bg-neutral-800 px-3 py-2 text-sm" aria-label="Minutes" />
+        <input id="secInput" type="number" min="0" max="59" value="30" class="w-1/2 rounded-xl bg-neutral-800 px-3 py-2 text-sm" aria-label="Seconds" />
+      </div>
+      <div class="mt-3 flex items-center gap-2">
+        <button id="startBtn" class="flex-1 px-3 py-2 rounded-xl bg-lime-500 text-black font-medium">Start</button>
+        <button id="pauseBtn" class="flex-1 px-3 py-2 rounded-xl bg-neutral-800">Pause</button>
+        <button id="resetBtn" class="px-3 py-2 rounded-xl bg-neutral-800">Reset</button>
+      </div>
+      <p class="mt-2 text-xs text-neutral-400">Tip: drag the green bubble anywhere. It stays on top while you switch days.</p>
+      <audio id="beep" preload="auto">
+        <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA" type="audio/mp3">
+      </audio>
+    </div>
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // -------- Tabs --------
+    const tabButtons = document.querySelectorAll('.day-tab');
+    const panels = {
+      mon: document.getElementById('panel-mon'),
+      tue: document.getElementById('panel-tue'),
+      wed: document.getElementById('panel-wed'),
+      thu: document.getElementById('panel-thu'),
+      fri: document.getElementById('panel-fri'),
+      sat: document.getElementById('panel-sat'),
+      sun: document.getElementById('panel-sun'),
+    };
+
+    function setActive(day){
+      Object.values(panels).forEach(p=>p.classList.remove('active'));
+      panels[day].classList.add('active');
+      tabButtons.forEach(btn=>btn.dataset.active = (btn.dataset.day===day));
+      // remember last tab
+      try{ localStorage.setItem('activeDay', day); }catch(e){}
+    }
+
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> setActive(btn.dataset.day));
+    });
+
+    // Default to saved tab or Monday
+    const saved = (localStorage.getItem('activeDay')||'mon');
+    setActive(saved);
+
+    // -------- Draggable Timer Bubble --------
+    const bubble = document.getElementById('timerBubble');
+    const card = document.getElementById('timerCard');
+    const closeCard = document.getElementById('closeCard');
+    const bubbleTime = document.getElementById('bubbleTime');
+    const beep = document.getElementById('beep');
+
+    let dragging = false; let offsetX=0, offsetY=0; let posX=0, posY=0;
+    const timerWrap = document.getElementById('timer');
+
+    function onPointerDown(e){
+      dragging = true;
+      const rect = timerWrap.getBoundingClientRect();
+      const clientX = e.touches? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches? e.touches[0].clientY : e.clientY;
+      offsetX = clientX - rect.left;
+      offsetY = clientY - rect.top;
+      document.addEventListener('mousemove', onPointerMove);
+      document.addEventListener('touchmove', onPointerMove, {passive:false});
+      document.addEventListener('mouseup', onPointerUp);
+      document.addEventListener('touchend', onPointerUp);
+    }
+    function onPointerMove(e){
+      if(!dragging) return;
+      const clientX = e.touches? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches? e.touches[0].clientY : e.clientY;
+      posX = clientX - offsetX;
+      posY = clientY - offsetY;
+      // Keep within viewport bounds with small margins
+      const maxX = window.innerWidth - 56; // bubble size margin approx
+      const maxY = window.innerHeight - 56;
+      posX = Math.min(Math.max(8, posX), maxX);
+      posY = Math.min(Math.max(8, posY), maxY);
+      timerWrap.style.left = posX + 'px';
+      timerWrap.style.top = posY + 'px';
+      timerWrap.style.right = 'auto';
+      timerWrap.style.bottom = 'auto';
+      e.preventDefault?.();
+    }
+    function onPointerUp(){
+      dragging = false;
+      document.removeEventListener('mousemove', onPointerMove);
+      document.removeEventListener('touchmove', onPointerMove);
+      document.removeEventListener('mouseup', onPointerUp);
+      document.removeEventListener('touchend', onPointerUp);
+      // persist position
+      try{ localStorage.setItem('timerPos', JSON.stringify({x:posX,y:posY})); }catch(e){}
+    }
+
+    bubble.addEventListener('mousedown', onPointerDown);
+    bubble.addEventListener('touchstart', onPointerDown, {passive:true});
+
+    // Toggle card
+    bubble.addEventListener('click', (e)=>{
+      // If it was a drag, skip opening
+      if(Math.abs(posX) + Math.abs(posY)){
+        // small delay so a drag doesn't instantly open
+      }
+      card.classList.toggle('hidden');
+    });
+    closeCard.addEventListener('click', ()=> card.classList.add('hidden'));
+
+    // Restore saved timer position
+    try{
+      const savedPos = JSON.parse(localStorage.getItem('timerPos'));
+      if(savedPos){
+        timerWrap.style.left = savedPos.x + 'px';
+        timerWrap.style.top = savedPos.y + 'px';
+        timerWrap.style.right = 'auto';
+        timerWrap.style.bottom = 'auto';
+        posX = savedPos.x; posY = savedPos.y;
+      }
+    }catch(e){}
+
+    // -------- Countdown Logic --------
+    const minInput = document.getElementById('minInput');
+    const secInput = document.getElementById('secInput');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let remaining = 30; // seconds
+    let ticking = null;
+
+    function format(s){
+      const m = Math.floor(s/60).toString().padStart(2,'0');
+      const sec = Math.floor(s%60).toString().padStart(2,'0');
+      return `${m}:${sec}`;
+    }
+    function render(){ bubbleTime.textContent = format(remaining); }
+
+    function setFromInputs(){
+      let m = parseInt(minInput.value||'0',10);
+      let s = parseInt(secInput.value||'0',10);
+      if(isNaN(m)||m<0) m=0; if(isNaN(s)||s<0) s=0; if(s>59) s=59;
+      remaining = m*60 + s;
+      render();
+    }
+
+    document.querySelectorAll('.preset').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        remaining = parseInt(btn.dataset.sec,10);
+        minInput.value = Math.floor(remaining/60);
+        secInput.value = remaining%60;
+        render();
+      });
+    });
+
+    startBtn.addEventListener('click', ()=>{
+      setFromInputs();
+      if(ticking) return;
+      ticking = setInterval(()=>{
+        remaining = Math.max(0, remaining-1);
+        render();
+        if(remaining===0){
+          clearInterval(ticking); ticking=null;
+          try{ beep.currentTime = 0; beep.play().catch(()=>{});}catch(e){}
+          if(navigator.vibrate){ try{ navigator.vibrate([200,100,200]); }catch(e){} }
+        }
+      }, 1000);
+    });
+    pauseBtn.addEventListener('click', ()=>{ if(ticking){ clearInterval(ticking); ticking=null; }});
+    resetBtn.addEventListener('click', ()=>{ if(ticking){ clearInterval(ticking); ticking=null; } remaining = 30; minInput.value=0; secInput.value=30; render(); });
+
+    // Keep bubble display synced if user types custom values
+    minInput.addEventListener('input', setFromInputs);
+    secInput.addEventListener('input', setFromInputs);
+
+    // Initialize display
+    render();
   </script>
 </body>
 </html>
