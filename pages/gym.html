@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Weekly Fitness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Smooth hide/show for tabs */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+    /* Make the draggable timer ignore text selection during drag */
+    .no-select{user-select:none;-webkit-user-select:none}
+    /* Hide horizontal scrollbar for tab row */
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    .no-scrollbar::-webkit-scrollbar{ display:none; }
+    /* Completed exercise styling */
+    .completed{opacity:0.6}
+    .completed p{ text-decoration: line-through; }
+  </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 antialiased">
+  <!-- App Shell -->
+  <div class="max-w-md mx-auto min-h-screen pb-32">
+    <!-- Header -->
+    <header class="px-4 pt-6 pb-2">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <h1 class="text-2xl font-semibold tracking-tight">Weekly Fitness</h1>
+          <p class="text-sm text-neutral-400">Ben and Milly's fitness routine</p>
+        </div>
+        <div class="text-xs text-neutral-400">Profile: <span id="activeProfileLabel" class="text-neutral-200 font-medium transition-colors">Milly</span></div>
+      </div>
+      <!-- Profile Switcher -->
+      <div class="mt-3 flex gap-2">
+        <button class="profile-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[active=true]:ring-2 data-[active=true]:ring-lime-500" data-profile="Milly" aria-pressed="true">Milly</button>
+        <button class="profile-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[active=true]:ring-2 data-[active=true]:ring-lime-500" data-profile="Ben" aria-pressed="false">Ben</button>
+      </div>
+    </header>
+
+    <!-- Nutrition Summary -->
+    <section class="px-4 mt-2">
+      <div class="grid grid-cols-3 gap-3">
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Calories</p>
+          <p class="text-2xl font-bold">1,400</p>
+          <p class="text-[10px] text-neutral-400">kcal / day</p>
+        </div>
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Weight</p>
+          <p class="text-2xl font-bold">84<span class="text-base font-medium"> kg</span></p>
+          <p class="text-[10px] text-neutral-400">Current</p>
+        </div>
+        <div class="rounded-2xl bg-gradient-to-b from-neutral-800 to-neutral-900 p-4 shadow-inner">
+          <p class="text-xs uppercase tracking-wide text-neutral-400">Goal</p>
+          <p class="text-2xl font-bold">70<span class="text-base font-medium"> kg</span></p>
+          <p class="text-[10px] text-neutral-400">Target</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Day Tabs -->
+    <section class="mt-6">
+      <div class="px-4 flex gap-2 overflow-x-auto no-scrollbar">
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="mon">Mon</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="tue">Tue</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="wed">Wed</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="thu">Thu</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="fri">Fri</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="sat">Sat</button>
+        <button class="day-tab px-3 py-2 rounded-xl bg-neutral-800 text-sm data-[active=true]:bg-lime-500 data-[active=true]:text-black data-[today=true]:ring-2 data-[today=true]:ring-lime-400" data-day="sun">Sun</button>
+      </div>
+
+      <div class="mt-4 px-4 space-y-4">
+        <!-- Monday -->
+        <article id="panel-mon" class="tab-panel active">
+          <h2 class="text-lg font-semibold">Legs + Easy Run</h2>
+          <ul class="mt-2 space-y-2" data-day="mon"></ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3 run-block"></div>
+        </article>
+
+        <!-- Tuesday -->
+        <article id="panel-tue" class="tab-panel">
+          <h2 class="text-lg font-semibold">Upper Body + Easy Cardio</h2>
+          <ul class="mt-2 space-y-2" data-day="tue"></ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3 run-block"></div>
+        </article>
+
+        <!-- Wednesday (Rest) -->
+        <article id="panel-wed" class="tab-panel">
+          <h2 class="text-lg font-semibold">Rest + Mobility</h2>
+          <ul class="mt-2 space-y-2" data-day="wed"></ul>
+          <!-- no run-block on purpose -->
+        </article>
+
+        <!-- Thursday -->
+        <article id="panel-thu" class="tab-panel">
+          <h2 class="text-lg font-semibold">Core + Run Intervals</h2>
+          <ul class="mt-2 space-y-2" data-day="thu"></ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3 run-block"></div>
+        </article>
+
+        <!-- Friday -->
+        <article id="panel-fri" class="tab-panel">
+          <h2 class="text-lg font-semibold">Full Body (Light)</h2>
+          <ul class="mt-2 space-y-2" data-day="fri"></ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3 run-block"></div>
+        </article>
+
+        <!-- Saturday -->
+        <article id="panel-sat" class="tab-panel">
+          <h2 class="text-lg font-semibold">Glutes/Legs + Steady Run</h2>
+          <ul class="mt-2 space-y-2" data-day="sat"></ul>
+          <div class="mt-3 rounded-xl bg-neutral-900 p-3 run-block"></div>
+        </article>
+
+        <!-- Sunday (Rest) -->
+        <article id="panel-sun" class="tab-panel">
+          <h2 class="text-lg font-semibold">Full Rest</h2>
+          <ul class="mt-2 space-y-2" data-day="sun"></ul>
+          <!-- no run-block on purpose -->
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- Floating Draggable Countdown Timer -->
+  <div id="timer" class="fixed bottom-6 right-6 z-50">
+    <!-- Collapsed bubble -->
+    <button id="timerBubble" class="no-select w-16 h-16 rounded-full bg-lime-500 text-black shadow-xl flex items-center justify-center text-lg font-semibold active:scale-95 transition" aria-label="Open timer" title="Timer">
+      <span id="bubbleTime">00:30</span>
+    </button>
+
+    <!-- Expanded card -->
+    <div id="timerCard" class="hidden mt-2 w-72 max-w-[90vw] rounded-2xl bg-neutral-900/95 backdrop-blur p-4 shadow-2xl border border-neutral-800">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold">Set Timer</h3>
+        <button id="closeCard" class="text-xs text-neutral-400 hover:text-neutral-200">Close</button>
+      </div>
+      <div class="mt-3 grid grid-cols-3 gap-2">
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="30">30s</button>
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="60">60s</button>
+        <button class="preset px-3 py-2 rounded-xl bg-neutral-800 text-sm" data-sec="90">90s</button>
+      </div>
+      <div class="mt-3 flex items-center gap-2">
+        <input id="minInput" type="number" min="0" value="0" class="w-1/2 rounded-xl bg-neutral-800 px-3 py-2 text-sm" aria-label="Minutes" />
+        <input id="secInput" type="number" min="0" max="59" value="30" class="w-1/2 rounded-xl bg-neutral-800 px-3 py-2 text-sm" aria-label="Seconds" />
+      </div>
+      <div class="mt-3 flex items-center gap-2">
+        <button id="startBtn" class="flex-1 px-3 py-2 rounded-xl bg-lime-500 text-black font-medium">Start</button>
+        <button id="pauseBtn" class="flex-1 px-3 py-2 rounded-xl bg-neutral-800">Pause</button>
+        <button id="resetBtn" class="px-3 py-2 rounded-xl bg-neutral-800">Reset</button>
+      </div>
+      <p class="mt-2 text-xs text-neutral-400">Tip: drag the green bubble anywhere. It stays on top while you switch days.</p>
+      <audio id="beep" preload="auto">
+        <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA" type="audio/mp3">
+      </audio>
+    </div>
+  </div>
+
+  <script>
+    // -------- Utilities for profile-aware storage --------
+    const PROFILE_KEY = 'fitness.v1.profile';
+    const ACTIVE_DAY_KEY = (p)=>`fitness.v1.activeDay.${p}`;
+    const COMPLETED_KEY = (p,d)=>`fitness.v1.completed.${p}.${d}`;
+
+    function loadJSON(key, fallback){
+      try{ const v = JSON.parse(localStorage.getItem(key)); return (v==null? fallback : v); }catch(e){ return fallback; }
+    }
+    function saveJSON(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+
+    // -------- Plans (per profile) --------
+    const plans = {
+      Milly: {
+        mon: {
+          title: 'Legs + Easy Run',
+          exercises: [
+            {reps:'3×12', name:'Bodyweight Squats', note:'Tempo 2–1–2. Rest 45–60s.'},
+            {reps:'3×10/leg', name:'Reverse Lunges', note:'Light dumbbells optional.'},
+            {reps:'3×15', name:'Glute Bridges', note:'Squeeze and pause 1s at top.'},
+            {reps:'2×20', name:'Standing Calf Raises', note:'Slow lowers.'},
+          ],
+          cardio: {title:'Run: 10 min easy', note:'Nasal breathing pace. Walk if needed.'}
+        },
+        tue: {
+          title: 'Upper Body + Easy Cardio',
+          exercises: [
+            {reps:'3×10', name:'Incline Push-Ups', note:'Bench/counter. Keep reps smooth.'},
+            {reps:'3×12/side', name:'1-Arm Dumbbell Rows', note:'Light weight; focus on squeeze.'},
+            {reps:'3×20', name:'Shoulder Taps', note:'Slow, hips still.'},
+            {reps:'2×15', name:'Biceps Curls (light)', note:'Full range, no swing.'},
+          ],
+          cardio: {title:'Walk/Jog: 15 min', note:'Comfortable conversational pace.'}
+        },
+        wed: {
+          title: 'Rest + Mobility',
+          exercises: [
+            {text:'Gentle full-body stretch • 10–15 min'},
+            {text:'Easy walk • 20–30 min (optional)'},
+            {text:'Focus on sleep, water, and protein.'}
+          ]
+        },
+        thu: {
+          title: 'Core + Run Intervals',
+          exercises: [
+            {reps:'3×30s', name:'Plank', note:'Ribs down, squeeze glutes.'},
+            {reps:'3×10/side', name:'Dead Bug', note:'Slow and controlled.'},
+            {reps:'3×10/side', name:'Bird Dog', note:'Reach long, keep hips level.'},
+            {reps:'3×20', name:'Mountain Climbers', note:'Steady rhythm.'},
+          ],
+          cardio: {title:'Run: 6 × 1 min easy / 1 min walk', note:'Warm up 5 min walk first.'}
+        },
+        fri: {
+          title: 'Full Body (Light)',
+          exercises: [
+            {reps:'3×12', name:'Goblet Squat (light)', note:'Comfortable weight; perfect form.'},
+            {reps:'3×12', name:'Dumbbell Shoulder Press', note:'Stop before pain; smooth reps.'},
+            {reps:'3×15', name:'Band Pull-Aparts / Rows', note:'Pinch shoulder blades.'},
+            {reps:'3×12', name:'Hip Hinge (RDL pattern)', note:'Light DBs, neutral back.'},
+          ],
+          cardio: {title:'Jog: 10 min easy', note:'Cool down 5 min walk.'}
+        },
+        sat: {
+          title: 'Gym Session',
+          exercises: [
+            {reps:'3×15', name:'Squats', note:'Body weight'},
+            {reps:'3×15', name:'Lunges', note:'Low weight'},
+            {reps:'3×15', name:'Leg Press', note:'Low weight'},
+            {reps:'3×15', name:'Lat Pull Down', note:'Low weight'},
+            {reps:'3×15', name:'Chest Press', note:'Low weight'},
+            {reps:'3×15', name:'Seated Row', note:'Low weight'}
+          ],
+          cardio: {title:'Stairmaster', note:'30mins'}
+        },
+        sun: {
+          title: 'Full Rest',
+          exercises: [
+            {text:'Feet up, relax, light walk optional.'},
+            {text:'Plan next week. Prep meals & water.'}
+          ]
+        }
+      },
+      ben: {
+        mon: {
+          title: 'Push + Easy Run',
+          exercises: [
+            {reps:'3×12', name:'Incline Push-Ups', note:'Hands on bench/counter.'},
+            {reps:'3×12', name:'Dumbbell Shoulder Press', note:'Light; smooth reps.'},
+            {reps:'2×10', name:'Bench/Chair Dips', note:'Keep shoulders down & back.'},
+            {reps:'2×15', name:'Lateral Raises (light)', note:'Soft elbows, T-shape.'},
+          ],
+          cardio: {title:'Run: 8–10 min easy', note:'Comfortable pace; nasal breathing.'}
+        },
+        tue: {
+          title: 'Legs (Light) + Core',
+          exercises: [
+            {reps:'3×10', name:'Goblet Squat', note:'Comfortable weight.'},
+            {reps:'3×10/leg', name:'Reverse Lunges', note:'Stay tall.'},
+            {reps:'3×15', name:'Standing Calf Raises', note:'Slow lowers.'},
+            {reps:'3×30s', name:'Plank', note:'Neutral spine.'},
+          ],
+          cardio: {title:'Walk: 10 min easy', note:'Optional recovery.'}
+        },
+        wed: {
+          title: 'Rest + Mobility',
+          exercises: [
+            {text:'Gentle full-body stretch • 10–15 min'},
+            {text:'Easy walk • 20–30 min (optional)'},
+            {text:'Hydrate and sleep 7–9h.'}
+          ]
+        },
+        thu: {
+          title: 'Pull + Intervals',
+          exercises: [
+            {reps:'3×12/side', name:'1-Arm Dumbbell Row', note:'Squeeze at top.'},
+            {reps:'3×20', name:'Band Pull-Aparts', note:'Shoulder blades pinch.'},
+            {reps:'3×15', name:'Band Face Pull', note:'Elbows high; light tension.'},
+            {reps:'2×15', name:'Biceps Curls', note:'Full range.'},
+          ],
+          cardio: {title:'Run: 5 × 1 min easy / 1 min walk', note:'Warm up 5 min walk first.'}
+        },
+        fri: {
+          title: 'Full Body Circuit (Light)',
+          exercises: [
+            {reps:'2×15', name:'Bodyweight Squats', note:'Smooth tempo.'},
+            {reps:'2×12', name:'Push-Ups (incline/knees)', note:'Quality over reps.'},
+            {reps:'2×12', name:'Hip Hinge (RDL)', note:'Neutral back.'},
+            {reps:'2×10/side', name:'Dead Bug', note:'Slow & controlled.'},
+          ],
+          cardio: {title:'Jog: 12 min easy', note:'Cool down 5 min walk.'}
+        },
+        sat: {
+          title: 'Gym Session',
+          exercises: [
+            {reps:'12', name:'Chest Press', note:'Slow and controlled.'},
+            {reps:'12', name:'Shoulder Press', note:'Slow and controlled.'},
+            {reps:'12', name:'Cable Bicep Curl', note:'Slow and controlled.'},
+            {reps:'12', name:'Cable Tricep Extension', note:'Slow and controlled.'}
+          ],
+          cardio: {title:'Walk on Stairmaster', note:'30mins'}
+        },
+        sun: {
+          title: 'Full Rest',
+          exercises: [
+            {text:'Relax, light mobility as needed.'}
+          ]
+        }
+      }
+    };
+
+    // -------- Tabs --------
+    const tabButtons = document.querySelectorAll('.day-tab');
+    const panels = {
+      mon: document.getElementById('panel-mon'),
+      tue: document.getElementById('panel-tue'),
+      wed: document.getElementById('panel-wed'),
+      thu: document.getElementById('panel-thu'),
+      fri: document.getElementById('panel-fri'),
+      sat: document.getElementById('panel-sat'),
+      sun: document.getElementById('panel-sun'),
+    };
+
+    let activeProfile = localStorage.getItem(PROFILE_KEY) || 'Milly';
+
+    function slug(s){ return (s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+    function renderDay(profile, day){
+      const plan = (plans[profile]||{})[day];
+      if(!plan) return;
+      const panel = panels[day];
+      const titleEl = panel.querySelector('h2');
+      const ul = panel.querySelector(`ul[data-day="${day}"]`);
+      const runBlock = panel.querySelector('.run-block');
+
+      // Title
+      titleEl.textContent = plan.title || '';
+
+      // Exercises list
+      ul.innerHTML = '';
+      (plan.exercises||[]).forEach((ex, idx)=>{
+        if(ex.text && !ex.name){
+          const li = document.createElement('li');
+          li.className = 'rounded-xl bg-neutral-900 p-3 text-sm';
+          li.textContent = ex.text;
+          ul.appendChild(li);
+        } else {
+          const li = document.createElement('li');
+          li.className = 'flex items-start gap-3 rounded-xl bg-neutral-900 p-3';
+          li.setAttribute('data-exercise','');
+          const id = `${day}-${slug(ex.name)}-${idx}`;
+          li.dataset.id = id;
+          li.dataset.order = (idx+1).toString();
+          li.setAttribute('role','checkbox');
+          li.setAttribute('aria-checked','false');
+          li.tabIndex = 0;
+          li.innerHTML = `
+            <span class="text-xs px-2 py-1 rounded-lg bg-neutral-800">${ex.reps||''}</span>
+            <div>
+              <p class="text-sm font-medium">${ex.name||''}</p>
+              <p class="text-xs text-neutral-400">${ex.note||''}</p>
+            </div>`;
+          ul.appendChild(li);
+        }
+      });
+
+      // Cardio block
+      if(plan.cardio){
+        if(!runBlock){
+          const rb = document.createElement('div');
+          rb.className = 'mt-3 rounded-xl bg-neutral-900 p-3 run-block';
+          rb.innerHTML = `<p class="text-sm font-medium">${plan.cardio.title}</p><p class="text-xs text-neutral-400">${plan.cardio.note||''}</p>`;
+          panel.appendChild(rb);
+        } else {
+          runBlock.innerHTML = `<p class="text-sm font-medium">${plan.cardio.title}</p><p class="text-xs text-neutral-400">${plan.cardio.note||''}</p>`;
+        }
+      } else {
+        if(runBlock) runBlock.remove();
+      }
+    }
+
+    function setActive(day){
+      Object.values(panels).forEach(p=>p.classList.remove('active'));
+      panels[day].classList.add('active');
+      tabButtons.forEach(btn=>btn.dataset.active = (btn.dataset.day===day));
+      // render plan for this profile & day
+      renderDay(activeProfile, day);
+      // remember last tab per profile
+      saveJSON(ACTIVE_DAY_KEY(activeProfile), day);
+      // apply saved completion state for this day
+      applyCompletedForDay(activeProfile, day);
+    }
+
+    tabButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> setActive(btn.dataset.day));
+    });
+
+    // -------- Profile Switcher --------
+    const profileButtons = document.querySelectorAll('.profile-tab');
+    const profileLabel = document.getElementById('activeProfileLabel');
+
+    // Compute today's day id and mark on buttons
+    const dayMap = ['sun','mon','tue','wed','thu','fri','sat'];
+    const todayId = dayMap[new Date().getDay()];
+    function markToday(){
+      document.querySelectorAll('.day-tab').forEach(btn=>{
+        btn.dataset.today = (btn.dataset.day === todayId);
+        if(btn.dataset.today === 'true'){ btn.setAttribute('aria-current','date'); } else { btn.removeAttribute('aria-current'); }
+      });
+    }
+    markToday();
+
+    function selectProfile(p, forceDay=null){
+      activeProfile = p;
+      try{ localStorage.setItem(PROFILE_KEY, p); }catch(e){}
+      profileButtons.forEach(b=> {
+        const isActive = (b.dataset.profile===p);
+        b.dataset.active = isActive;
+        b.setAttribute('aria-pressed', isActive ? 'true':'false');
+      });
+      // highlight the label green too
+      profileLabel.textContent = p;
+      profileLabel.classList.remove('text-neutral-200');
+      profileLabel.classList.add('text-lime-400');
+
+      // set active day for this profile
+      const savedDay = loadJSON(ACTIVE_DAY_KEY(p), todayId);
+      const dayToShow = forceDay || savedDay || todayId;
+      setActive(dayToShow);
+      // refresh completion state across all days so switching tabs later reflects it
+      ;['mon','tue','wed','thu','fri','sat','sun'].forEach(d=>{
+        renderDay(p, d);
+        applyCompletedForDay(p, d);
+      });
+    }
+
+    profileButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=> selectProfile(btn.dataset.profile));
+    });
+
+    // -------- Completion State + Reordering --------
+    function getCompletedList(profile, day){
+      return loadJSON(COMPLETED_KEY(profile, day), []);
+    }
+    function setCompletedList(profile, day, list){
+      saveJSON(COMPLETED_KEY(profile, day), list);
+    }
+
+    function applyCompletedForDay(profile, day){
+      const ul = document.querySelector(`ul[data-day="${day}"]`);
+      if(!ul) return;
+      const all = ul.querySelectorAll('[data-exercise]');
+      all.forEach(li=>{ li.classList.remove('completed'); li.setAttribute('aria-checked','false'); });
+      const completed = getCompletedList(profile, day);
+      // mark completed and move to bottom in saved order
+      completed.forEach(id=>{
+        const li = ul.querySelector(`[data-id="${id}"]`);
+        if(li){ li.classList.add('completed'); li.setAttribute('aria-checked','true'); ul.appendChild(li); }
+      });
+      // ensure incomplete items are above, sorted by original data-order
+      const incomplete = Array.from(ul.querySelectorAll('[data-exercise]:not(.completed)'))
+        .sort((a,b)=> (parseInt(a.dataset.order,10)) - (parseInt(b.dataset.order,10)));
+      incomplete.forEach(li=> ul.insertBefore(li, ul.firstChild));
+    }
+
+    function toggleExercise(li){
+      const ul = li.closest('ul');
+      const day = ul.dataset.day;
+      const id = li.dataset.id;
+      let completed = getCompletedList(activeProfile, day);
+      const isDone = li.classList.contains('completed');
+      if(!isDone){
+        // mark complete, push to end
+        li.classList.add('completed');
+        li.setAttribute('aria-checked','true');
+        ul.appendChild(li);
+        if(!completed.includes(id)) completed.push(id);
+        setCompletedList(activeProfile, day, completed);
+      }else{
+        // mark incomplete and restore order
+        li.classList.remove('completed');
+        li.setAttribute('aria-checked','false');
+        completed = completed.filter(x=> x!==id);
+        setCompletedList(activeProfile, day, completed);
+        // reorder: incomplete by data-order, then completed in saved order
+        applyCompletedForDay(activeProfile, day);
+      }
+    }
+
+    // Event delegation for dynamic exercise items
+    document.addEventListener('click', (e)=>{
+      const li = e.target.closest('li[data-exercise]');
+      if(li && li.closest('ul')) toggleExercise(li);
+    });
+    document.addEventListener('keydown', (e)=>{
+      const li = e.target.closest && e.target.closest('li[data-exercise]');
+      if(li && (e.key==='Enter' || e.key===' ')) { e.preventDefault(); toggleExercise(li); }
+    });
+
+    // Initial load: force show today's tab
+    selectProfile(activeProfile, todayId);
+
+    // -------- Draggable Timer Bubble --------
+    const bubble = document.getElementById('timerBubble');
+    const card = document.getElementById('timerCard');
+    const closeCard = document.getElementById('closeCard');
+    const bubbleTime = document.getElementById('bubbleTime');
+    const beep = document.getElementById('beep');
+
+    let dragging = false; let offsetX=0, offsetY=0; let posX=0, posY=0;
+    const timerWrap = document.getElementById('timer');
+
+    function onPointerDown(e){
+      dragging = true;
+      const rect = timerWrap.getBoundingClientRect();
+      const clientX = e.touches? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches? e.touches[0].clientY : e.clientY;
+      offsetX = clientX - rect.left;
+      offsetY = clientY - rect.top;
+      document.addEventListener('mousemove', onPointerMove);
+      document.addEventListener('touchmove', onPointerMove, {passive:false});
+      document.addEventListener('mouseup', onPointerUp);
+      document.addEventListener('touchend', onPointerUp);
+    }
+    function onPointerMove(e){
+      if(!dragging) return;
+      const clientX = e.touches? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches? e.touches[0].clientY : e.clientY;
+      posX = clientX - offsetX;
+      posY = clientY - offsetY;
+      // Keep within viewport bounds with small margins
+      const maxX = window.innerWidth - 56; // bubble size margin approx
+      const maxY = window.innerHeight - 56;
+      posX = Math.min(Math.max(8, posX), maxX);
+      posY = Math.min(Math.max(8, posY), maxY);
+      timerWrap.style.left = posX + 'px';
+      timerWrap.style.top = posY + 'px';
+      timerWrap.style.right = 'auto';
+      timerWrap.style.bottom = 'auto';
+      e.preventDefault?.();
+    }
+    function onPointerUp(){
+      dragging = false;
+      document.removeEventListener('mousemove', onPointerMove);
+      document.removeEventListener('touchmove', onPointerMove);
+      document.removeEventListener('mouseup', onPointerUp);
+      document.removeEventListener('touchend', onPointerUp);
+      // persist position
+      try{ localStorage.setItem('timerPos', JSON.stringify({x:posX,y:posY})); }catch(e){}
+    }
+
+    bubble.addEventListener('mousedown', onPointerDown);
+    bubble.addEventListener('touchstart', onPointerDown, {passive:true});
+
+    // Toggle card
+    bubble.addEventListener('click', (e)=>{
+      card.classList.toggle('hidden');
+    });
+    closeCard.addEventListener('click', ()=> card.classList.add('hidden'));
+
+    // Restore saved timer position
+    try{
+      const savedPos = JSON.parse(localStorage.getItem('timerPos'));
+      if(savedPos){
+        timerWrap.style.left = savedPos.x + 'px';
+        timerWrap.style.top = savedPos.y + 'px';
+        timerWrap.style.right = 'auto';
+        timerWrap.style.bottom = 'auto';
+        posX = savedPos.x; posY = savedPos.y;
+      }
+    }catch(e){}
+
+    // -------- Countdown Logic --------
+    const minInput = document.getElementById('minInput');
+    const secInput = document.getElementById('secInput');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let remaining = 30; // seconds
+    let ticking = null;
+
+    function format(s){
+      const m = Math.floor(s/60).toString().padStart(2,'0');
+      const sec = Math.floor(s%60).toString().padStart(2,'0');
+      return `${m}:${sec}`;
+    }
+    function renderTimer(){ bubbleTime.textContent = format(remaining); }
+
+    function setFromInputs(){
+      let m = parseInt(minInput.value||'0',10);
+      let s = parseInt(secInput.value||'0',10);
+      if(isNaN(m)||m<0) m=0; if(isNaN(s)||s<0) s=0; if(s>59) s=59;
+      remaining = m*60 + s;
+      renderTimer();
+    }
+
+    document.querySelectorAll('.preset').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        remaining = parseInt(btn.dataset.sec,10);
+        minInput.value = Math.floor(remaining/60);
+        secInput.value = remaining%60;
+        renderTimer();
+      });
+    });
+
+    startBtn.addEventListener('click', ()=>{
+      setFromInputs();
+      if(ticking) return;
+      ticking = setInterval(()=>{
+        remaining = Math.max(0, remaining-1);
+        renderTimer();
+        if(remaining===0){
+          clearInterval(ticking); ticking=null;
+          try{ beep.currentTime = 0; beep.play().catch(()=>{});}catch(e){}
+          if(navigator.vibrate){ try{ navigator.vibrate([200,100,200]); }catch(e){} }
+        }
+      }, 1000);
+    });
+    pauseBtn.addEventListener('click', ()=>{ if(ticking){ clearInterval(ticking); ticking=null; }});
+    resetBtn.addEventListener('click', ()=>{ if(ticking){ clearInterval(ticking); ticking=null; } remaining = 30; minInput.value=0; secInput.value=30; renderTimer(); });
+
+    // Keep bubble display synced if user types custom values
+    minInput.addEventListener('input', setFromInputs);
+    secInput.addEventListener('input', setFromInputs);
+
+    // Initialize display
+    renderTimer();
+  </script>
+</body>
+</html>

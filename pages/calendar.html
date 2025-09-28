@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-50 dark:bg-slate-900">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ben and Milly</title>
+  <meta name="description" content="Private family portal with quick links, calendar, photos and more." />
+  <!-- Tailwind via CDN (for production, consider self-hosting or a build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind config (extend if you wish)
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"], },
+          boxShadow: {
+            soft: "0 4px 20px rgba(0,0,0,0.08)",
+          }
+        }
+      },
+      darkMode: 'class'
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    .app-icon { border-radius: 22%; } /* iOS-like rounded square */
+  </style>
+</head>
+<body class="h-full text-slate-800 dark:text-slate-100 selection:bg-indigo-200/60 dark:selection:bg-indigo-400/40">
+  <!-- Container -->
+  <div class="min-h-screen max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- Top Bar -->
+    <header class="flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-xl bg-indigo-600 dark:bg-indigo-500 grid place-items-center text-white font-extrabold">F</div>
+        <div>
+          <h1 class="font-extrabold tracking-tight text-2xl sm:text-3xl">Ben and Milly</h1>
+          <p id="todayText" class="text-sm text-slate-500 dark:text-slate-400"></p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="editModeBtn" class="hidden md:inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold bg-slate-200/70 hover:bg-slate-300 dark:bg-slate-700/70 dark:hover:bg-slate-700">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zm2.92 2.83H5v-.92l9.06-9.06.92.92L5.92 20.08zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z"/></svg>
+          Edit tiles
+        </button>
+        <button id="darkToggle" class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold bg-slate-200/70 hover:bg-slate-300 dark:bg-slate-700/70 dark:hover:bg-slate-700" title="Toggle dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 0 0 0 18c4.97 0 9-4.03 9-9 0-1.61-.43-3.12-1.18-4.43A7.5 7.5 0 1 1 12 3z"/></svg>
+          Theme
+        </button>
+      </div>
+    </header>
+
+    <!-- Apps Grid -->
+    <section class="mt-6">
+      <div class="flex items-baseline justify-between mb-3">
+        <h2 class="font-bold text-lg">Quick Apps</h2>
+      </div>
+
+      <div id="appsGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <!-- Example App Tile -->
+        <a href="#calendar" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-indigo-500 to-indigo-600 text-white">
+            <!-- Calendar icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-7 w-7" fill="currentColor"><path d="M7 2h2v2h6V2h2v2h3a2 2 0 0 1 2 2v3H2V6a2 2 0 0 1 2-2h3V2zm15 8v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-8h20z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">Calendar</div>
+            <div class="text-xs text-slate-500">Family events</div>
+          </div>
+        </a>
+
+        <a href="#photos" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-rose-500 to-pink-600 text-white">
+            <!-- Photos icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5a2 2 0 0 0-2-2H5C3.9 3 3 3.9 3 5v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM8.5 13l2.5 3.01L13.5 12l4.5 6H6l2.5-5zM8 7a2 2 0 1 1 0 4 2 2 0 0 1 0-4z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">Photos</div>
+            <div class="text-xs text-slate-500">Latest snaps</div>
+          </div>
+        </a>
+
+        <a href="https://drive.google.com" target="_blank" rel="noopener" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-emerald-500 to-teal-600 text-white">
+            <!-- Drive icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M7.71 3L2 12l3.43 6h5.86L7.71 3zm8.58 0L10.71 9H22L16.29 3zM6.57 19L8.86 23H20l-2.29-4H6.57z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">Drive</div>
+            <div class="text-xs text-slate-500">Shared files</div>
+          </div>
+        </a>
+
+        <a href="https://todoist.com" target="_blank" rel="noopener" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-orange-500 to-amber-600 text-white">
+            <!-- Checklist icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v2H3V5zm0 6h10v2H3v-2zm0 6h18v2H3v-2zm13.5-5.5L18 13l4-4-1.5-1.5L18 10l-1.5-1.5L15 10l1.5 1.5z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">To‑do</div>
+            <div class="text-xs text-slate-500">Chores list</div>
+          </div>
+        </a>
+
+        <a href="#notes" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-fuchsia-500 to-purple-600 text-white">
+            <!-- Notes icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3h11l5 5v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm11 6h4l-4-4v4z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">Notes</div>
+            <div class="text-xs text-slate-500">Shared scratchpad</div>
+          </div>
+        </a>
+
+        <a href="https://chat.whatsapp.com/" target="_blank" rel="noopener" class="group block rounded-2xl p-4 shadow-soft bg-white/80 dark:bg-slate-800/70 ring-1 ring-slate-900/5 hover:ring-indigo-500 transition">
+          <div class="app-icon h-14 w-14 grid place-items-center bg-gradient-to-br from-lime-500 to-green-600 text-white">
+            <!-- Chat icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-semibold">Family Chat</div>
+            <div class="text-xs text-slate-500">WhatsApp/Signal</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Two Column Layout -->
+    <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Left: Calendar -->
+      <div id="calendar" class="lg:col-span-2 rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold">Family Calendar</h3>
+          <a href="https://calendar.google.com" target="_blank" rel="noopener" class="text-xs underline opacity-70 hover:opacity-100">Open full calendar</a>
+        </div>
+        <div class="mt-3 aspect-[4/3] w-full overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-900">
+          <!-- Replace src with your public Google Calendar embed URL -->
+          <!-- Example: https://calendar.google.com/calendar/embed?src=YOUR_CAL_ID&ctz=Europe/London -->
+          <iframe class="w-full h-full" src="https://calendar.google.com/calendar/embed?src=millycyb%40outlook.com&ctz=America%2FNew_York" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>" title="Calendar placeholder"></iframe>
+          <div class="p-4 text-xs text-slate-500">Embed your calendar by replacing the iframe <code>src</code> with your Google Calendar embed link.</div>
+        </div>
+      </div>
+
+      <!-- Right: Weather & Birthdays -->
+      <div class="space-y-6">
+        <!-- Weather (simple, optional) -->
+        <div class="rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-semibold">Weather</h3>
+            <span id="weatherUpdated" class="text-xs text-slate-500"></span>
+          </div>
+          <div class="mt-2 text-sm" id="weatherBox">Set your lat/long in the script to enable weather.</div>
+        </div>
+
+        <!-- Birthdays -->
+        <div class="rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+          <h3 class="font-semibold mb-2">Birthdays & Anniversaries</h3>
+          <ul id="bdayList" class="text-sm space-y-1">
+            <!-- Example entries -->
+            <li><span class="font-medium">Mum</span> — 12 Oct</li>
+            <li><span class="font-medium">Dad</span> — 25 Jan</li>
+            <li><span class="font-medium">Ava & Ben (Anniv.)</span> — 03 Jun</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photos -->
+    <section id="photos" class="mt-8 rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-semibold">Latest Photos</h3>
+        <a href="#" class="text-xs underline opacity-70 hover:opacity-100">Open album</a>
+      </div>
+      <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        <!-- Replace src with your own images or an album embed -->
+        <img src="https://picsum.photos/seed/1/400/400" alt="Photo 1" class="w-full h-28 object-cover rounded-xl"/>
+        <img src="https://picsum.photos/seed/2/400/400" alt="Photo 2" class="w-full h-28 object-cover rounded-xl"/>
+        <img src="https://picsum.photos/seed/3/400/400" alt="Photo 3" class="w-full h-28 object-cover rounded-xl"/>
+        <img src="https://picsum.photos/seed/4/400/400" alt="Photo 4" class="w-full h-28 object-cover rounded-xl"/>
+        <img src="https://picsum.photos/seed/5/400/400" alt="Photo 5" class="w-full h-28 object-cover rounded-xl"/>
+        <img src="https://picsum.photos/seed/6/400/400" alt="Photo 6" class="w-full h-28 object-cover rounded-xl"/>
+      </div>
+    </section>
+
+    <!-- Notes / Scratchpad -->
+    <section id="notes" class="mt-8 rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-semibold">Shared Notes</h3>
+        <span class="text-xs text-slate-500">Auto-saves to this browser</span>
+      </div>
+      <textarea id="notesArea" class="mt-3 w-full min-h-[140px] rounded-xl bg-slate-100/70 dark:bg-slate-900/50 p-3 outline-none" placeholder="Jot down reminders, shopping list, meal plan…"></textarea>
+    </section>
+
+    <!-- Useful links -->
+    <section class="mt-8 rounded-2xl shadow-soft ring-1 ring-slate-900/5 bg-white/80 dark:bg-slate-800/70 p-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-semibold">Useful Links</h3>
+        <button id="addLinkBtn" class="text-xs underline opacity-70 hover:opacity-100">Add link</button>
+      </div>
+      <ul id="linksList" class="mt-3 text-sm grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        <li><a class="block rounded-lg px-3 py-2 bg-slate-100/70 dark:bg-slate-900/50 hover:bg-indigo-50 dark:hover:bg-slate-900/70 underline" href="https://www.bbc.co.uk/weather" target="_blank" rel="noopener">BBC Weather</a></li>
+        <li><a class="block rounded-lg px-3 py-2 bg-slate-100/70 dark:bg-slate-900/50 hover:bg-indigo-50 dark:hover:bg-slate-900/70 underline" href="https://www.nhs.uk" target="_blank" rel="noopener">NHS</a></li>
+        <li><a class="block rounded-lg px-3 py-2 bg-slate-100/70 dark:bg-slate-900/50 hover:bg-indigo-50 dark:hover:bg-slate-900/70 underline" href="https://www.gov.uk" target="_blank" rel="noopener">GOV.UK</a></li>
+      </ul>
+    </section>
+
+    <footer class="mt-10 pb-6 text-center text-xs text-slate-500">
+      <p>© <span id="year"></span> Family Hub • Private for our family.</p>
+    </footer>
+
+  </div>
+
+  <!-- JS: basic enhancements -->
+  <script>
+    // --- Today text ---
+    const today = new Date();
+    document.getElementById('todayText').textContent = today.toLocaleString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('year').textContent = today.getFullYear();
+
+    // --- Dark mode with localStorage ---
+    const root = document.documentElement;
+    const darkToggle = document.getElementById('darkToggle');
+    const storedTheme = localStorage.getItem('familyhub-theme');
+    if (storedTheme === 'dark' || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      root.classList.add('dark');
+    }
+    darkToggle.addEventListener('click', () => {
+      root.classList.toggle('dark');
+      localStorage.setItem('familyhub-theme', root.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // --- Notes autosave ---
+    const notesArea = document.getElementById('notesArea');
+    notesArea.value = localStorage.getItem('familyhub-notes') || '';
+    notesArea.addEventListener('input', () => localStorage.setItem('familyhub-notes', notesArea.value));
+
+    // --- Add custom links (saved locally) ---
+    const linksList = document.getElementById('linksList');
+    const addLinkBtn = document.getElementById('addLinkBtn');
+    const savedLinks = JSON.parse(localStorage.getItem('familyhub-links') || '[]');
+
+    function renderLinks() {
+      // Keep defaults (first 3) and then render saved
+      const defaults = Array.from(linksList.querySelectorAll('li')).slice(0,3);
+      linksList.innerHTML = '';
+      defaults.forEach(li => linksList.appendChild(li));
+      savedLinks.forEach(({title, url}, idx) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a class="block rounded-lg px-3 py-2 bg-slate-100/70 dark:bg-slate-900/50 hover:bg-indigo-50 dark:hover:bg-slate-900/70 underline" href="${url}" target="_blank" rel="noopener">${title}</a>`;
+        linksList.appendChild(li);
+      });
+    }
+
+    renderLinks();
+
+    addLinkBtn.addEventListener('click', () => {
+      const title = prompt('Link title');
+      if (!title) return;
+      const url = prompt('URL (include https://)');
+      if (!url) return;
+      savedLinks.push({title, url});
+      localStorage.setItem('familyhub-links', JSON.stringify(savedLinks));
+      renderLinks();
+    });
+
+    // --- Tiny Weather using open-meteo (no key) ---
+    // Set your location here (lat/lon). Example: London
+    const HOME = { lat: 51.5072, lon: -0.1276, tz: Intl.DateTimeFormat().resolvedOptions().timeZone };
+    async function loadWeather() {
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${HOME.lat}&longitude=${HOME.lon}&current=temperature_2m,weather_code,wind_speed_10m&hourly=temperature_2m&forecast_days=1&timezone=${encodeURIComponent(HOME.tz)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const c = data.current || {};
+        const code = (c.weather_code ?? 0);
+        const label = weatherLabel(code);
+        const box = document.getElementById('weatherBox');
+        box.innerHTML = `<div class="flex items-center gap-4"><div class="text-4xl font-extrabold">${Math.round(c.temperature_2m)}°</div><div><div class="font-semibold">${label}</div><div class="text-xs opacity-70">Wind ${Math.round(c.wind_speed_10m)} km/h</div></div></div>`;
+        document.getElementById('weatherUpdated').textContent = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+
+    function weatherLabel(code){
+      const map = {
+        0:'Clear', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+        45:'Fog', 48:'Depositing rime fog', 51:'Light drizzle', 53:'Drizzle', 55:'Dense drizzle',
+        61:'Light rain', 63:'Rain', 65:'Heavy rain', 71:'Light snow', 73:'Snow', 75:'Heavy snow',
+        80:'Rain showers', 81:'Rain showers', 82:'Violent rain showers', 95:'Thunderstorm', 99:'Hail'
+      };
+      return map[code] || '—';
+    }
+
+    loadWeather();
+
+  </script>
+</body>
+</html>
